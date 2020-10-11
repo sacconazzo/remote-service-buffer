@@ -45,6 +45,7 @@ const service = function (path, name, headers) {
       this._readyToLoad((now, diff) => {
         this._getRemote().then((ret) => console.log(`refresh after ${diff}ms: ${now.toString()}`)) //refresh buffer
       })
+
       return this._data //return buffer
     } else {
       return await this._getRemote() //if not yet been loaded
