@@ -26,7 +26,7 @@ import service from "remote-service-buffer"
 
 const fetchHeaders = {} //optional
 
-const refreshTime = 1000 * 60 * 5 //optional
+const refreshTime = 1000 * 5 //optional (default 5 mins)
 
 const myService = new service("http://worldtimeapi.org/api", "/ip", refreshTime, fetchHeaders)
 

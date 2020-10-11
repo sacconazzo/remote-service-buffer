@@ -1,9 +1,9 @@
 const fetch = require("node-fetch")
 
-const service = function (path, name, time, headers) {
+const service = function (path, name, refresh, headers) {
   this.path = path
   this.name = name
-  this._time = time || 1000 * 60 * 5
+  this._refresh = refresh || 1000 * 60 * 5
   this._headers = headers || {}
   this._data = null
   this._time = 0
@@ -18,7 +18,7 @@ const service = function (path, name, time, headers) {
     const diff = now.getTime() - this._time
     const timeout = now.getTime() - this._loading - now
     if (
-      (!this._loading && diff > this.time) || //check buffer expired
+      (!this._loading && diff > this._refresh) || //check buffer expired
       (this._loading && timeout > 1000 * 60) //check loading timeout
     )
       cb(now, diff, timeout)
