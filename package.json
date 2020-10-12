@@ -1,7 +1,8 @@
 {
   "name": "remote-service-buffer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Buffer result from external API, update only when needed",
+  "types": "index.d.ts",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
