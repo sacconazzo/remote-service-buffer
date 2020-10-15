@@ -44,7 +44,7 @@ const service = function (path, name, refresh, headers) {
   this.get = async function () {
     if (this._data) {
       this._readyToLoad((now, diff) => {
-        this._getRemote().then((ret) => console.log(`refresh after ${diff}ms: ${now.toString()}`)) //refresh buffer
+        this._getRemote().then(() => console.log(`Refresh ${this.name} after ${diff}ms: ${now.toString()}`)) //refresh buffer
       })
 
       return this._data //return buffer
@@ -53,7 +53,7 @@ const service = function (path, name, refresh, headers) {
     }
   }
 
-  this.get().then(() => console.log(`Buffer loaded for ${name}`)) //load buffer
+  this.get().then(() => console.log(`Linkd ${name}`)) //load buffer
 }
 
 exports = module.exports = service
