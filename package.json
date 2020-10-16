@@ -1,6 +1,6 @@
 {
   "name": "remote-service-buffer",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Buffer result from external API, update only when needed",
   "types": "index.d.ts",
   "main": "index.js",

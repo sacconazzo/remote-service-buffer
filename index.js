@@ -16,7 +16,7 @@ const service = function (path, name, refresh, headers) {
   this._readyToLoad = function (cb) {
     const now = new Date()
     const diff = now.getTime() - this._time
-    const timeout = now.getTime() - this._loading - now
+    const timeout = now.getTime() - this._loading
     if (
       (!this._loading && diff > this._refresh) || //check buffer expired
       (this._loading && timeout > 1000 * 60) //check loading timeout
