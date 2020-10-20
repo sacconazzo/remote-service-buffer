@@ -1,10 +1,11 @@
 const fetch = require("node-fetch")
 
-const service = function (path, name, refresh, headers) {
+const service = function (path, name, refresh, headers, log) {
   this.path = path
   this.name = name
   this._refresh = refresh || 1000 * 60 * 5
   this._headers = headers || {}
+  this._log = log
   this._data = null
   this._time = 0
   this._loading = false
@@ -17,11 +18,14 @@ const service = function (path, name, refresh, headers) {
     const now = new Date()
     const diff = now.getTime() - this._time
     const timeout = now.getTime() - this._loading
+    if (this._log) console.log(`check ${this.name} diff: ${diff} // timeout: ${timeout} // loading: ${this._loading}`)
     if (
       (!this._loading && diff > this._refresh) || //check buffer expired
       (this._loading && timeout > 1000 * 60) //check loading timeout
-    )
+    ) {
+      if (this._log) console.log(`refreshing ${this.name}...`)
       cb(now, diff, timeout)
+    }
   }
 
   this._getRemote = async function () {
@@ -44,7 +48,9 @@ const service = function (path, name, refresh, headers) {
   this.get = async function () {
     if (this._data) {
       this._readyToLoad((now, diff) => {
-        this._getRemote().then(() => console.log(`Refresh ${this.name} after ${diff}ms: ${now.toString()}`)) //refresh buffer
+        this._getRemote().then(() => {
+          if (this._log) console.log(`Refresh ${this.name} after ${diff}ms: ${now.toString()}`)
+        }) //refresh buffer
       })
 
       return this._data //return buffer
@@ -53,7 +59,9 @@ const service = function (path, name, refresh, headers) {
     }
   }
 
-  this.get().then(() => console.log(`Linkd ${name}`)) //load buffer
+  this.get().then(() => {
+    if (this._log) console.log(`Linkd ${name}`)
+  }) //load buffer
 }
 
 exports = module.exports = service
